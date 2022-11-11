@@ -1,0 +1,30 @@
+name: 'Update Image Tag'
+description: 'Auto-update image tag in manifests repository based on images pushed on Amazon ECR'
+inputs:
+  repo_url:
+    required: true
+  github_user:
+    required: true
+  github_password:
+    required: true
+  app_name:
+    required: true
+  version:
+    required: true
+  release_tag:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: 'Prepare Environment'
+      run: | 
+          wget https://github.com/mikefarah/yq/releases/download/v4.30.1/yq_linux_amd64 -O /usr/bin/yq &&\
+          chmod +x /usr/bin/yq
+      shell: bash
+    - name: 'Update Repository'
+      run: |
+        bash ${GITHUB_WORKSPACE}/update_image_tag.sh https:://${{ inputs.github_user }}:${{ inputs.github_password }}@${{ inputs.repo_url }} \
+          ${{ inputs.release_tag }} ${{ inputs.app_name }} ${{ inputs.version }}
+      shell: bash
+
+
