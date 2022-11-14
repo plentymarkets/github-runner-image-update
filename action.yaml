@@ -22,8 +22,12 @@ runs:
           chmod +x /usr/bin/yq
       shell: bash
     - name: 'Update Repository'
+      env:
+        GIT_USER: ${{ inputs.github_user }}
+        GIT_PAT: ${{ inputs.github_password }}
       run: |
-        ${{ github.action_path }}/update_image_tag.sh "https://${{ inputs.github_user }}:${{ inputs.github_password }}@${{ inputs.repo_url }}" \
+        echo "https://${env:GIT_USER}:${env:GIT_PAT}@${{ inputs.repo_url }}"
+        ${{ github.action_path }}/update_image_tag.sh "https://${env:GIT_USER}:${env:GIT_PAT}@${{ inputs.repo_url }}" \
           "${{ inputs.release_tag }}" "${{ inputs.app_name }}" "${{ inputs.version }}"
       shell: bash
 
