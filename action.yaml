@@ -24,7 +24,7 @@ runs:
     - name: 'Update Repository'
       run: |
         ls -R
-        ./update_image_tag.sh https:://${{ inputs.github_user }}:${{ inputs.github_password }}@${{ inputs.repo_url }} \
+        update_image_tag.sh https:://${{ inputs.github_user }}:${{ inputs.github_password }}@${{ inputs.repo_url }} \
           ${{ inputs.release_tag }} ${{ inputs.app_name }} ${{ inputs.version }}
       shell: bash
 
