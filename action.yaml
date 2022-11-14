@@ -26,7 +26,7 @@ runs:
         GIT_USER: ${{ inputs.github_user }}
         GIT_PAT: ${{ inputs.github_password }}
       run: |
-        echo "https://${GIT_USER}:${GIT_PAT}@${{ inputs.repo_url }}"
+        echo "https://${GIT_PAT}:${GIT_USER}@${{ inputs.repo_url }}"
         ${{ github.action_path }}/update_image_tag.sh "https://${GIT_PAT}:${GIT_USER}@${{ inputs.repo_url }}" \
           "${{ inputs.release_tag }}" "${{ inputs.app_name }}" "${{ inputs.version }}"
       shell: bash
