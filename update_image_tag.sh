@@ -9,6 +9,9 @@ function clone_repo {
     dir_name="$2"
 
     git clone "$repo_url" "$dir_name"
+    if [ $? != 0 ]; then
+        echo "Error: Repository failed to clone"
+    fi
 }
 
 REPO_URL="$1"
@@ -59,9 +62,15 @@ do
 
 done 
 
-if [[ "$updated" == "true" ]]; then
-    echo "Somethhing was updated"
+if [[ "$GIT_USER" != "" ]]; then
+    git config user.name "$GIT_USER"
+fi
 
+if [[ "$GIT_MAIL" != "" ]]; then
+    git config user.email "$GIT_USER"
+fi
+
+if [[ "$updated" == "true" ]]; then
     git add .
     git commit -m "image-update-workflow: Updated app ${APP} for ${RELEASE_TAG} to version ${APP_VERSION}"
 
