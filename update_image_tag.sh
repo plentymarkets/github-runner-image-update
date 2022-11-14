@@ -11,6 +11,7 @@ function clone_repo {
     git clone "$repo_url" "$dir_name"
     if [ $? != 0 ]; then
         echo "Error: Repository failed to clone"
+        exit 1
     fi
 }
 
