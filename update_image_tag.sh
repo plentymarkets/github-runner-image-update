@@ -23,7 +23,6 @@ APP_VERSION="$4"
 clone_repo "$REPO_URL" "./manifests"
 
 cd ./manifests
-git checkout automation-test # Temporary, remove this
 
 updated="false"
 
