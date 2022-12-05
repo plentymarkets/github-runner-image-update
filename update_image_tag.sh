@@ -1,6 +1,8 @@
 #! /bin/bash
 # Usage: ./update_image_tag.sh <Repo to be updated> <Release tag> <Applciation Name> <Image Version>
 
+set -e
+
 ANNOTATION_PREFIX="auto-update"
 CLUSTERS_REL_PAT="eks-clusters"
 
