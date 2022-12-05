@@ -13,6 +13,8 @@ inputs:
     required: true
   release_tag:
     required: true
+  cluster_directory:
+    default: './eks-clusters'
 runs:
   using: "composite"
   steps:
@@ -27,7 +29,7 @@ runs:
         GIT_MAIL: "${{ inputs.github_user }}@plentymarkets.com"
       run: |
         ${{ github.action_path }}/update_image_tag.sh "https://${{ inputs.github_user }}:${{ inputs.github_password }}@${{ inputs.repo_url }}" \
-          "${{ inputs.release_tag }}" "${{ inputs.app_name }}" "${{ inputs.version }}"
+          "${{ inputs.release_tag }}" "${{ inputs.app_name }}" "${{ inputs.version }}" "${{ inputs.cluster_directory }}"
       shell: bash
 
 

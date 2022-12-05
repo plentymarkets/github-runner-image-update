@@ -19,6 +19,7 @@ REPO_URL="$1"
 RELEASE_TAG="$2"
 APP="$3"
 APP_VERSION="$4"
+CLUSTERS_REL_PAT="$5"
 
 clone_repo "$REPO_URL" "./manifests"
 
