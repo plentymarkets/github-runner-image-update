@@ -70,7 +70,7 @@ if [[ "$GIT_USER" != "" ]]; then
 fi
 
 if [[ "$GIT_MAIL" != "" ]]; then
-    git config user.email "$GIT_USER"
+    git config user.email "$GIT_MAIL"
 fi
 
 if [[ "$updated" == "true" ]]; then
