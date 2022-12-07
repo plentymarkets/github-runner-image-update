@@ -24,14 +24,7 @@ function get_user_details {
         echo "Warning: Could not find GH_TOKEN, using default user name and email"
         return
     fi
-
-    gh auth status && skip_github="false"
-    if [[ "$skip_github" == "true" ]]; then
-        echo "Warning: Could not login in GitHub, using default user name and email"
-        return
-    fi
-
-    gh api /user | jq '.login'
+    
     gh_user="$(gh api /user | jq -r '.login')"
     if [[ "$gh_user" != "" ]]; then
         echo "Using GitHub user: ${gh_user}"
@@ -52,6 +45,10 @@ APP_VERSION="$4"
 CLUSTERS_REL_PAT="$5"
 
 get_user_details
+
+# Github Workers dont have HOME set, will set it here, just for "setup-git" to work
+export HOME="$(pwd)"
+gh auth setup-git
 
 clone_repo "$REPO_URL" "./manifests"
 
