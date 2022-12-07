@@ -24,21 +24,16 @@ function get_user_details {
         echo "Warning: Could not find GH_TOKEN, using default user name and email"
         return
     fi
-
-    gh auth status && skip_github="false"
-    if [[ "$skip_github" == "true" ]]; then
-        echo "Warning: Could not login in GitHub, using default user name and email"
-        return
-    fi
-
-    gh api /user | jq '.login'
+    
     gh_user="$(gh api /user | jq -r '.login')"
+    echo "DEBUG USER: $gh_user"
     if [[ "$gh_user" != "" ]]; then
         echo "Using GitHub user: ${gh_user}"
         export GIT_USER="${gh_user}"
     fi
 
     gh_mail="$(gh api /user/emails | jq -r '.[0].email')"
+    echo "DEBUG MAIL: $gh_mail"
     if [[ "$gh_mail" != "" ]]; then
         echo "Using GitHub mail: ${gh_mail}"
         export GIT_MAIL="${gh_mail}"
