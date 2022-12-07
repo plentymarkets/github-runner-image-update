@@ -26,14 +26,12 @@ function get_user_details {
     fi
     
     gh_user="$(gh api /user | jq -r '.login')"
-    echo "DEBUG USER: $gh_user"
     if [[ "$gh_user" != "" ]]; then
         echo "Using GitHub user: ${gh_user}"
         export GIT_USER="${gh_user}"
     fi
 
     gh_mail="$(gh api /user/emails | jq -r '.[0].email')"
-    echo "DEBUG MAIL: $gh_mail"
     if [[ "$gh_mail" != "" ]]; then
         echo "Using GitHub mail: ${gh_mail}"
         export GIT_MAIL="${gh_mail}"
@@ -47,6 +45,10 @@ APP_VERSION="$4"
 CLUSTERS_REL_PAT="$5"
 
 get_user_details
+
+# Github Workers dont have HOME set, will set it here, just for "setup-git" to work
+export HOME="$(pwd)"
+gh auth setup-git
 
 clone_repo "$REPO_URL" "./manifests"
 
